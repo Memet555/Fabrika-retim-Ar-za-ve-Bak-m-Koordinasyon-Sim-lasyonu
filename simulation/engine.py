@@ -34,6 +34,14 @@ class FactorySimulation:
         for i in range(self.config.get("num_machines_paketleme", 2)):
             self.pool_paketleme.put(f"Paketleme-{i+1}")
             
+        # Ara stok (buffer) kapasite limitleri
+        buffer_km_cap = self.config.get("buffer_limit_kesim_montaj", 5)
+        buffer_mp_cap = self.config.get("buffer_limit_montaj_paketleme", 5)
+        
+        # Sınırsız durumda SimPy Resource kapasitesini çok büyük bir sayı yapıyoruz
+        self.buffer_slots_kesim_montaj = simpy.Resource(self.env, capacity=buffer_km_cap if buffer_km_cap > 0 else 999999)
+        self.buffer_slots_montaj_paketleme = simpy.Resource(self.env, capacity=buffer_mp_cap if buffer_mp_cap > 0 else 999999)
+            
     def run(self):
         """Simülasyon sürecini başlatır ve belirtilen süre kadar işletir."""
         # İş üreten süreci ekle
@@ -44,7 +52,9 @@ class FactorySimulation:
             self.pool_montaj,
             self.pool_paketleme,
             self.tech_resource, 
-            self.metrics
+            self.metrics,
+            self.buffer_slots_kesim_montaj,
+            self.buffer_slots_montaj_paketleme
         ))
         
         # Motoru çalıştır

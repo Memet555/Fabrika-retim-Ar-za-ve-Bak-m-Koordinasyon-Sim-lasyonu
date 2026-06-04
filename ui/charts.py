@@ -6,19 +6,21 @@ import plotly.graph_objects as go
 import pandas as pd
 
 def plot_machine_utilization(metrics_df, total_time):
-    """Makinelerin çalışma ve duruş oranlarını yığılı çubuk grafik (Stacked Bar) ile gösterir."""
+    """Makinelerin çalışma, bloklanma, duruş ve atıl kalma oranlarını gösterir."""
     if metrics_df.empty:
         return go.Figure()
         
     fig = go.Figure(data=[
-        go.Bar(name='Üretim (Aktif)', x=metrics_df['Makine'], y=metrics_df['Kullanım Oranı (%)'], marker_color='#2ca02c'),
-        go.Bar(name='Arıza / Bekleme', x=metrics_df['Makine'], y=metrics_df['Duruş Oranı (%)'], marker_color='#d62728'),
+        go.Bar(name='Üretim (Aktif)', x=metrics_df['Makine'], y=metrics_df['Aktif Çalışma (%)'], marker_color='#2ca02c'),
+        go.Bar(name='Bloklu (Ara Stok Dolu)', x=metrics_df['Makine'], y=metrics_df['Bloklanma (%)'], marker_color='#ff7f0e'),
+        go.Bar(name='Arıza / PM Duruş', x=metrics_df['Makine'], y=metrics_df['Duruş/Bakım (%)'], marker_color='#d62728'),
+        go.Bar(name='Atıl (Boşta)', x=metrics_df['Makine'], y=metrics_df['Atıl Kapasite (%)'], marker_color='#7f7f7f'),
     ])
     
     # Y-Ekseni %100'ü geçmesin
     fig.update_layout(
         barmode='stack', 
-        title="Makine Kapasite Kullanım ve Duruş Oranları",
+        title="Makine Zaman Dağılımı ve Duruş Oranları",
         yaxis=dict(title='Yüzde (%)', range=[0, 105])
     )
     return fig
