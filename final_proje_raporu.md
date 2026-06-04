@@ -56,7 +56,7 @@ Sistemin başarısı sadece üretim adetiyle değil, toplam kârlılıkla ölç�
 
 ---
 
-## 5. Geliştirilen Yazılım Mimarisi ve Kod Yapısı
+## 5. Gelişmiş Yazılım Mimarisi ve Kod Yapısı
 
 Sistem nesne yönelimli ve modüler bir yapıda tasarlanmıştır:
 1. **`app.py`**: Streamlit tabanlı kullanıcı arayüzüdür. Kullanıcının tüm ara stok kısıtlarını, önleyici bakım parametrelerini, finansal katsayıları ve istasyon özelliklerini yönetmesini sağlar. Net kâr kartını ve finansal P&L tablosunu basar.
@@ -68,7 +68,25 @@ Sistem nesne yönelimli ve modüler bir yapıda tasarlanmıştır:
 
 ---
 
-## 6. Sonuç ve Optimizasyon Çıktıları
+## 6. Kullanıcı Arayüzü Tasarımı ve Görselleştirme
+
+Geliştirilen dinamik Streamlit web arayüzü, kullanıcının parametrelerin sistem üzerindeki etkisini anlık olarak görselleştirmesine imkan tanır. Aşağıda iki farklı simülasyon senaryosunun ekran görüntüleri analiz edilmiştir:
+
+### A. Reaktif (Arıza Sonrası) Bakım ve Darboğaz Senaryosu
+*Açıklama: Bu senaryoda ara stok limitlerinin yetersiz olması nedeniyle makinelerde yüksek oranda bloklanma (sarı alanlar) yaşanmış ve plansız arızalar nedeniyle net kâr düşmüştür.*
+
+![Reaktif Senaryo Görünümü](images/reaktif_senaryo.png)
+*Şekil 1: Reaktif Bakım ve Düşük Ara Stok Limitli Simülasyon Çıktıları*
+
+### B. Önleyici Bakım ve Optimize Edilmiş Ara Stok Senaryosu
+*Açıklama: Önleyici bakım politikasının aktif edilmesiyle plansız arızalar en aza indirilmiş, ara stok sınırlarının yükseltilmesiyle bloklanmalar çözülmüş ve sistem yüksek kârlılığa ulaştırılmıştır.*
+
+![Önleyici Bakım ve Optimize Senaryo Görünümü](images/onleyici_bakim_senaryosu.png)
+*Şekil 2: Önleyici Bakım ve Optimize Parametrelerle Maksimum Kârlılık Çıktıları*
+
+---
+
+## 7. Sonuç ve Optimizasyon Çıktıları
 
 Geliştirilen bu sistem sayesinde öğrenciler ve endüstri mühendisleri şu analizleri yapabilirler:
 1. **Ara Stok Optimizasyonu:** Ara stok limitinin çok küçük tutulması durumunda bloklanma sürelerinin arttığını, çok büyük tutulduğunda ise ara stok maliyetlerinin ve gecikmelerin nasıl değiştiğini gözlemleyebilirler.
