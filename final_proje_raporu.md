@@ -75,18 +75,49 @@ Geliştirilen dinamik Streamlit web arayüzü, kullanıcının parametrelerin si
 ### A. Reaktif (Arıza Sonrası) Bakım ve Darboğaz Senaryosu
 *Açıklama: Bu senaryoda ara stok limitlerinin yetersiz olması nedeniyle makinelerde yüksek oranda bloklanma (sarı alanlar) yaşanmış ve plansız arızalar nedeniyle net kâr düşmüştür.*
 
-![Reaktif Senaryo Görünümü](images/reaktif_senaryo.png)
+![Reaktif Senaryo Görünümü](images/bulanık%20mantık1.PNG)
 *Şekil 1: Reaktif Bakım ve Düşük Ara Stok Limitli Simülasyon Çıktıları*
 
 ### B. Önleyici Bakım ve Optimize Edilmiş Ara Stok Senaryosu
 *Açıklama: Önleyici bakım politikasının aktif edilmesiyle plansız arızalar en aza indirilmiş, ara stok sınırlarının yükseltilmesiyle bloklanmalar çözülmüş ve sistem yüksek kârlılığa ulaştırılmıştır.*
 
-![Önleyici Bakım ve Optimize Senaryo Görünümü](images/onleyici_bakim_senaryosu.png)
+![Önleyici Bakım ve Optimize Senaryo Görünümü](images/bulanık%20mantık2.PNG)
 *Şekil 2: Önleyici Bakım ve Optimize Parametrelerle Maksimum Kârlılık Çıktıları*
+
+### C. Yoğunluk Haritası, Karar Destek Önerileri ve OEE Durum Tablosu
+*Açıklama: Simülasyon sonrasında üretilen zamana yayılmış yoğunluk haritası, kural tabanlı karar destek sistemi önerileri ve her makineye ait ayrıntılı OEE durum tablosu.*
+
+![Karar Destek ve Veri Tablosu Görünümü](images/bulanık%20mantık3.PNG)
+*Şekil 3: Karar Destek Önerileri ve Detaylı OEE Performans Tablosu*
 
 ---
 
-## 7. Sonuç ve Optimizasyon Çıktıları
+## 7. Üretilen Sentetik Veri Setleri
+
+Geliştirilen simülasyon motoru, gelecekte makine öğrenmesi modelleri veya ileri seviye veri analitiği (Kuyruk Teorisi, OEE iyileştirme vb.) çalışmalarında kullanılmak üzere iki adet CSV formatında sentetik veri seti ihraç edebilmektedir. Bu veri setlerinin yapıları ve öznitelikleri şunlardır:
+
+### A. Sipariş Bekleme ve Çevrim Süresi Veri Seti (`sentetik_siparis_verileri.csv`)
+Bu veri seti, fabrikaya giren ve üretim hattını tamamlayan her bir siparişin zaman damgalarını ve kuyrukta bekleme sürelerini saniye hassasiyetinde tutar:
+- **İş ID:** Siparişe atanan benzersiz kimlik numarası (Sıralı tam sayı).
+- **Geliş Zamanı:** Siparişin fabrikaya giriş yaptığı zaman damgası (Simülasyon dakikası).
+- **Kesim Bekleme (dk):** Siparişin Kesim istasyonu önündeki kuyrukta boş makine beklediği süre.
+- **Montaj Bekleme (dk):** Siparişin Kesim'den çıkıp Montaj istasyonu önündeki kuyrukta beklediği süre.
+- **Paketleme Bekleme (dk):** Siparişin Montaj'dan çıkıp Paketleme önünde beklediği süre.
+- **Toplam Bekleme (dk):** Siparişin üretim hattı boyunca kuyruklarda geçirdiği toplam süre (Kesim + Montaj + Paketleme).
+- **Sistemde Kalma Süresi (dk):** Siparişin fabrikada geçirdiği toplam çevrim süresi (Cycle Time - Girişten çıkışa kadar geçen süre).
+
+### B. Makine Performans ve Duruş Veri Seti (`sentetik_makine_verileri.csv`)
+Bu veri seti, üretim hattında bulunan her bir makinenin zaman kullanım oranlarını ve OEE (Toplam Ekipman Etkinliği) durum kırılımlarını yüzde (%) olarak saklar:
+- **İstasyon:** Makinenin ait olduğu operasyonel aşama (Kesim, Montaj veya Paketleme).
+- **Makine:** Makinenin benzersiz adı (örn: Kesim-1, Montaj-2).
+- **Aktif Çalışma (%):** Makinenin katma değerli üretim yaptığı zamanın toplam simülasyon süresine oranı.
+- **Bloklanma (%):** Makinenin işini bitirmesine rağmen, sonraki istasyonun ara stok (buffer) alanı dolu olduğu için bloke olarak durduğu süre oranı.
+- **Duruş/Bakım (%):** Makinenin plansız arızalar veya planlı önleyici bakımlar (PM) sebebiyle üretim yapamadığı süre oranı.
+- **Atıl Kapasite (%):** İstasyonda iş kuyruğu olmaması nedeniyle makinenin boşta (idle) beklediği süre oranı.
+
+---
+
+## 8. Sonuç ve Optimizasyon Çıktıları
 
 Geliştirilen bu sistem sayesinde öğrenciler ve endüstri mühendisleri şu analizleri yapabilirler:
 1. **Ara Stok Optimizasyonu:** Ara stok limitinin çok küçük tutulması durumunda bloklanma sürelerinin arttığını, çok büyük tutulduğunda ise ara stok maliyetlerinin ve gecikmelerin nasıl değiştiğini gözlemleyebilirler.
